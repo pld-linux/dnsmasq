@@ -25,7 +25,7 @@ behind NAT routers and connected via modem, ISDN, ADSL, or cable-modem
 connections.
 
 %description -l pl
-Dnsmasq jest lekkim, ³atwym do konfiguracji forwarderem DNS
+Dnsmasq jest lekkim, ³atwym w konfiguracji forwarderem DNS
 zaprojektowanym do serwowania us³ugi DNS dla ma³ych sieci, gdzie
 u¿ywanie BIND by³oby przesad±. Zewnêtrzne serwery DNS mog± byæ
 automatycznie konfigurowane przez PPP lub DHCP. Mo¿e on serwowaæ tak¿e
@@ -38,7 +38,7 @@ po³±czenia kablowe.
 
 %build
 %{__make} \
-	CC=%{__cc} \
+	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
 
 %install
@@ -49,6 +49,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
 install src/dnsmasq $RPM_BUILD_ROOT%{_sbindir}
 install dnsmasq.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install dnsmasq.conf.example $RPM_BUILD_ROOT%{_sysconfdir}/dnsmasq.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -74,5 +75,6 @@ fi
 %doc CHANGELOG FAQ *.html
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
 %attr(755,root,root) %{_sbindir}/dnsmasq
-%config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/dnsmasq
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/dnsmasq
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dnsmasq.conf
 %{_mandir}/man8/*
