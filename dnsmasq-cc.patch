@@ -1,0 +1,16 @@
+--- dnsmasq-1.6/Makefile~	2002-05-26 15:28:23.000000000 +0200
++++ dnsmasq-1.6/Makefile	2002-06-09 09:10:17.000000000 +0200
+@@ -8,11 +8,11 @@
+ 	rm -f *~ $(OBJS) dnsmasq
+ 
+ .c.o: dnsmasq.h
+-	gcc -O2 -Wall -W -c $*.c 
++	$(CC) $(OPTFLAGS) -Wall -W -c $*.c 
+ 
+ 
+ dnsmasq : $(OBJS) dnsmasq.h config.h
+-	gcc -o $@  $(OBJS) 
++	$(CC) -o $@  $(OBJS) 
+ 
+ install : dnsmasq
+ 	install -d $(BINDIR) -d $(MANDIR)
