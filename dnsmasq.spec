@@ -10,7 +10,8 @@ Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/
-PreReq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,postun):	/sbin/chkconfig
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
