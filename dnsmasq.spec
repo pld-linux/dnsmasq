@@ -1,7 +1,7 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	1.10
+Version:	1.11
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
