@@ -1,7 +1,7 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy nameserver
 Name:		dnsmasq
-Version:	1.7
+Version:	1.9
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
@@ -35,7 +35,7 @@ i po³±czonych przez modem, ISDL, ADSL lub po³±czenia kablowe.
 %patch0 -p1
 
 %build
-%{__make} CC=%{__cc} OPTFLAGS="%{rpmcflags}"
+%{__make} CC=%{__cc} OPT="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
