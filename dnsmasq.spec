@@ -35,7 +35,7 @@ i po³±czonych przez modem, ISDL, ADSL lub po³±czenia kablowe.
 %patch0 -p1
 
 %build
-%{__make} CC=%{__cc} OPTFLAGS="%{optflags}"
+%{__make} CC=%{__cc} OPTFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
