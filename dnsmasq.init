@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# Startup script for the DNS caching server
+#
+# chkconfig:	2345 99 01
+# description:	This script starts your DNS caching server
+# processname:	dnsmasq
+# pidfile:	/var/run/dnsmasq.pid
+
+# Set some frequently user variables
+SERVICE=dnsmasq
+LOCKFILE=/var/lock/subsys/$SERVICE
+MSG=$SERVICE
+CMD=$SERVICE
+
+# Source funtion library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up
+if is_no "$NETWORKING"; then
+	msg_Network_Down $MSG
+	exit 1
+fi
+
+MAILHOSTNAME=""
+RESOLV_CONF=""
+DHCP_LEASE="/var/lib/dhcp/dhcpd.leases"
+DOMAIN_SUFFIX=`dnsdomainname`
+
+# Get service config
+[ -f "/etc/sysconfig/$SERVICE" ] && . "/etc/sysconfig/$SERVICE"
+
+# Set proper options for dnsmasq
+OPTIONS=""
+[ -n "$MAILHOSTNAME" ] &&  OPTIONS="$OPTIONS -m $MAILHOSTNAME"
+[ -n "$RESOLV_CONF" ] && OPTIONS="$OPTIONS -r $RESOLV_CONF"
+[ -n "$DHCP_LEASE" ] && OPTIONS="$OPTIONS -l $DHCP_LEASE"
+[ -n "$DOMAIN_SUFFIX" ] && OPTIONS="$OPTIONS -s $DOMAIN_SUFFIX"
+
+# See how we were called.
+case "$1" in
+  start)
+  	if [ ! -f "$LOCKFILE" ]; then
+		msg_starting $MSG
+        	daemon $CMD $OPTIONS
+		RETVAL=$?
+        	[ $RETVAL -eq 0 ] && touch $LOCKFILE
+	else
+		msg_Already_Running $MSG
+		exit 1
+	fi
+        ;;
+  stop)
+  	if [ -f "$LOCKFILE" ]; then
+		msg_stopping $MSG
+        	killproc $CMD
+		rm -f $LOCKFILE  >/dev/null 2>&1
+	else
+		msg_Not_Running $MSG
+		exit 1
+        fi
+        ;;
+  status)
+	status $CMD
+	exit $?
+	;;
+  restart|reload)
+	$0 stop
+	$0 start
+	;;
+  *)
+        msg_Usage "$0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+
+exit $RETVAL
+
