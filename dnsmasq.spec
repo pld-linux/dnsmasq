@@ -26,11 +26,12 @@ connections.
 
 %description -l pl
 Dnsmasq jest lekkim, ³atwym do konfiguracji forwarderem DNS
-zaprojektowanym do serwowania us³ugi DNS dla ma³ych sieci, gdzie u¿ywanie
-BIND by³o by przesad±. Zewnêtrzne serwery DNS mog± byæ automatycznie
-konfigurowane przez PPP lub DHCP. Mo¿e on serwowaæ tak¿e nazwy dla lokalnych
-maszyn nie znajduj±cych siê w globalnym DNS. Jest idealny dla sieci za NAT
-i po³±czonych przez modem, ISDL, ADSL lub po³±czenia kablowe.
+zaprojektowanym do serwowania us³ugi DNS dla ma³ych sieci, gdzie
+u¿ywanie BIND by³oby przesad±. Zewnêtrzne serwery DNS mog± byæ
+automatycznie konfigurowane przez PPP lub DHCP. Mo¿e on serwowaæ tak¿e
+nazwy dla lokalnych maszyn nie znajduj±cych siê w globalnym DNS. Jest
+idealny dla sieci za NAT i po³±czonych przez modem, ISDL, ADSL lub
+po³±czenia kablowe.
 
 %prep
 %setup -q
