@@ -1,12 +1,12 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	2.11
+Version:	2.13
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	02aa4ffb835cbc9bdf96fcb915901cb3
+# Source0-md5:	ec51ce5b1edc3e1cb743dcbef61ca808
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/
