@@ -5,11 +5,11 @@ Version:	1.6
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	%{name}-%{version}.tar.gz
+Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.config
 Patch0:		%{name}-cc.patch
-URL:		http://www.thekelleys.org.uk/dnsmasq
+URL:		http://www.thekelleys.org.uk/dnsmasq/
 PreReq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
