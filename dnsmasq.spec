@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
+# Source0-md5:	fa050d34d953af01bf179f8ec0263676
 Source1:	%{name}.init
 Source2:	%{name}.config
 Patch0:		%{name}-cc.patch
