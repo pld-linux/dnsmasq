@@ -45,8 +45,8 @@ po³±czenia kablowe.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d,%{_mandir}/man8}
 
-install %SOURCE1 $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
-install %SOURCE2 $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
 install src/dnsmasq $RPM_BUILD_ROOT%{_sbindir}
 install dnsmasq.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
