@@ -29,12 +29,12 @@ MAILHOSTNAME=""
 RESOLV_CONF=""
 DHCP_LEASE="/var/lib/dhcp/dhcpd.leases"
 DOMAIN_SUFFIX=`dnsdomainname`
+OPTIONS=""
 
 # Get service config
 [ -f "/etc/sysconfig/$SERVICE" ] && . "/etc/sysconfig/$SERVICE"
 
 # Set proper options for dnsmasq
-OPTIONS=""
 [ -n "$MAILHOSTNAME" ] &&  OPTIONS="$OPTIONS -m $MAILHOSTNAME"
 [ -n "$RESOLV_CONF" ] && OPTIONS="$OPTIONS -r $RESOLV_CONF"
 [ -n "$DHCP_LEASE" ] && OPTIONS="$OPTIONS -l $DHCP_LEASE"
