@@ -1,7 +1,7 @@
 Summary:	A lightweight caching nameserver
-Summary(pl):	Lekki buforuj±cy nameserver
+Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	1.9
+Version:	1.10
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
@@ -67,7 +67,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG COPYING doc.html
+%doc CHANGELOG FAQ *.html
 %attr(755,root,root) /etc/rc.d/init.d/dnsmasq
 %attr(755,root,root) %{_sbindir}/dnsmasq
 %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/dnsmasq
