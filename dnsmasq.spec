@@ -1,15 +1,14 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	1.11
-Release:	2
+Version:	1.12
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
+# Source0-md5:	41f4ef37bb38e7b50430d00de92d5789
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	fa050d34d953af01bf179f8ec0263676
 Source1:	%{name}.init
 Source2:	%{name}.config
-Patch0:		%{name}-cc.patch
 URL:		http://www.thekelleys.org.uk/dnsmasq/
 PreReq:		/sbin/chkconfig
 Provides:	caching-nameserver
@@ -34,10 +33,9 @@ i po³±czonych przez modem, ISDL, ADSL lub po³±czenia kablowe.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%{__make} CC=%{__cc} OPT="%{rpmcflags}"
+%{__make} CC=%{__cc} CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
