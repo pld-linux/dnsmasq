@@ -71,7 +71,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG FAQ *.html
-%attr(755,root,root) /etc/rc.d/init.d/dnsmasq
+%attr(754,root,root) /etc/rc.d/init.d/dnsmasq
 %attr(755,root,root) %{_sbindir}/dnsmasq
 %config(noreplace) %verify(not md5 size mtime) /etc/sysconfig/dnsmasq
 %{_mandir}/man8/*
