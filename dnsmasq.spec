@@ -12,8 +12,6 @@ Patch0:		%{name}-cc.patch
 URL:		http://www.thekelleys.org.uk/dnsmasq/
 PreReq:		/sbin/chkconfig
 Provides:	caching-nameserver
-Obsoletes:	caching-nameserver
-Obsoletes:	nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
