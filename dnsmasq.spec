@@ -1,12 +1,12 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	2.23
+Version:	2.24
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	7be1f5bd6446cbb743feaf26bf74db53
+# Source0-md5:	d269531be1f130ab642c71c593138d31
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/
@@ -48,7 +48,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d,%{_mandir
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
 install src/dnsmasq $RPM_BUILD_ROOT%{_sbindir}
-install dnsmasq.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install man/dnsmasq.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install dnsmasq.conf.example $RPM_BUILD_ROOT%{_sysconfdir}/dnsmasq.conf
 
 %clean
