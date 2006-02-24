@@ -10,8 +10,9 @@ Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/
-PreReq:		rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,postun):	/sbin/chkconfig
+Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,17 +57,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add dnsmasq
-if [ -f %{_localstatedir}/lock/subsys/dnsmasq ]; then
-	/etc/rc.d/init.d/dnsmasq restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/dnsmasq start\" to start dnsmasq." >&2
-fi
+%service dnsmasq restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f %{_localstatedir}/lock/subsys/dnsmasq ]; then
-		/etc/rc.d/init.d/dnsmasq stop
-	fi
+	%service dnsmasq stop
 	/sbin/chkconfig --del dnsmasq
 fi
 
