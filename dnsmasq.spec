@@ -11,7 +11,7 @@ Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires(post,postun):	/sbin/chkconfig
+Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
