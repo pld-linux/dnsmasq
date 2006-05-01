@@ -2,14 +2,16 @@ Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
 Version:	2.30
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 # Source0-md5:	91db9ef2c63269debf7794783074b751
 Source1:	%{name}.init
 Source2:	%{name}.config
+Patch0:		%{name}-sh.patch
 URL:		http://www.thekelleys.org.uk/dnsmasq/
+BuildRequires:	gettext-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -36,11 +38,13 @@ po³±czenia kablowe.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__make} \
+%{__make} all-i18n \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcflags} -DHAVE_ISC_READER" \
+	PREFIX=%{_prefix}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -48,9 +52,13 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d,%{_mandir
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
-install src/dnsmasq $RPM_BUILD_ROOT%{_sbindir}
-install man/dnsmasq.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install dnsmasq.conf.example $RPM_BUILD_ROOT%{_sysconfdir}/dnsmasq.conf
+
+%{__make} install-i18n \
+	DESTDIR=$RPM_BUILD_ROOT \
+	PREFIX=%{_prefix}
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -65,7 +73,7 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del dnsmasq
 fi
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc CHANGELOG FAQ *.html
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
