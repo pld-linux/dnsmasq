@@ -1,30 +1,26 @@
-diff -ur dnsmasq-2.30.org/bld/install-mo dnsmasq-2.30/bld/install-mo
 --- dnsmasq-2.30.org/bld/install-mo	2006-04-23 15:26:22.000000000 +0200
 +++ dnsmasq-2.30/bld/install-mo	2006-05-01 03:48:26.213345250 +0200
-@@ -1,9 +1,10 @@
+@@ -1,9 +1,9 @@
  #!/bin/sh
  
  for f in *.mo; do
 -  install -d $1/${f/.mo/}/LC_MESSAGES
 -  install -m 644 $f $1/${f/.mo/}/LC_MESSAGES/dnsmasq.mo
 -  echo installing $1/${f/.mo/}/LC_MESSAGES/dnsmasq.mo
-+  f=`echo $f | sed 's/.mo//'`
-+  install -d $1/$f/LC_MESSAGES
-+  install -m 644 $f.mo $1/$f/LC_MESSAGES/dnsmasq.mo
-+  echo installing $1/$f/LC_MESSAGES/dnsmasq.mo
++  install -d $1/${f%.mo}/LC_MESSAGES
++  install -m 644 $f $1/${f%.mo}/LC_MESSAGES/dnsmasq.mo
++  echo installing $1/${f%.mo}/LC_MESSAGES/dnsmasq.mo
  done
  
  
-diff -ur dnsmasq-2.30.org/Makefile dnsmasq-2.30/Makefile
 --- dnsmasq-2.30.org/Makefile	2006-04-23 15:26:21.000000000 +0200
 +++ dnsmasq-2.30/Makefile	2006-05-01 03:47:23.785443750 +0200
-@@ -26,7 +26,8 @@
+@@ -26,7 +25,7 @@
  all-i18n :
  	$(MAKE) I18N=-DLOCALEDIR='\"$(LOCALEDIR)\"' -f ../bld/Makefile -C $(SRC) dnsmasq
  	cd $(PO); for f in *.po; do \
 -		$(MAKE) -f ../bld/Makefile -C ../$(SRC) $${f/.po/.mo}; \
-+		f=`echo $$f | sed 's/.po/.mo/'`; \
-+		$(MAKE) -f ../bld/Makefile -C ../$(SRC) $$f; \
++		$(MAKE) -f ../bld/Makefile -C ../$(SRC) $${f%.po}.mo; \
  	done
  
  install-i18n : all-i18n install-common
