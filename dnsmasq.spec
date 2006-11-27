@@ -1,15 +1,15 @@
 Summary:	A lightweight caching nameserver
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS)
 Name:		dnsmasq
-Version:	2.33
+Version:	2.35
 Release:	1
-License:	GPL
+License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	45696461b6e6bc929273b1191ca50447
+# Source0-md5:	57b8643dc394cf2fbd1bced64536c6df
 Source1:	%{name}.init
 Source2:	%{name}.config
-URL:		http://www.thekelleys.org.uk/dnsmasq/
+URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
 BuildRequires:	gettext-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
@@ -18,13 +18,18 @@ Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Dnsmasq is lightweight, easy to configure DNS forwarder designed to
-provide DNS (domain name) services to a small network where using BIND
-would be overkill. It can be have its DNS servers automatically
-configured by PPP or DHCP, and it can serve the names of local
-machines which are not in the global DNS. It is ideal for networks
-behind NAT routers and connected via modem, ISDN, ADSL, or cable-modem
-connections.
+Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP server.
+It is designed to provide DNS and, optionally, DHCP, to a small network. It
+can serve the names of local machines which are not in the global DNS. The
+DHCP server integrates with the DNS server and allows machines with
+DHCP-allocated addresses to appear in the DNS with names configured either
+in each host or in a central configuration file. Dnsmasq supports static and
+dynamic DHCP leases and BOOTP for network booting of diskless machines.
+
+Dnsmasq is targeted at home networks using NAT and connected to the internet
+via a modem, cable-modem or ADSL connection but would be a good choice for
+any small network where low resource use and ease of configuration are
+important. 
 
 %description -l pl
 Dnsmasq jest lekkim, ³atwym w konfiguracji forwarderem DNS
@@ -73,7 +78,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CHANGELOG FAQ *.html
+%doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq,port-forward}
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
 %attr(755,root,root) %{_sbindir}/dnsmasq
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/dnsmasq
