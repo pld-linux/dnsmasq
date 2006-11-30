@@ -18,27 +18,35 @@ Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP server.
-It is designed to provide DNS and, optionally, DHCP, to a small network. It
-can serve the names of local machines which are not in the global DNS. The
-DHCP server integrates with the DNS server and allows machines with
-DHCP-allocated addresses to appear in the DNS with names configured either
-in each host or in a central configuration file. Dnsmasq supports static and
-dynamic DHCP leases and BOOTP for network booting of diskless machines.
+Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP
+server.  It is designed to provide DNS and, optionally, DHCP, to a
+small network. It can serve the names of local machines which are not
+in the global DNS. The DHCP server integrates with the DNS server and
+allows machines with DHCP-allocated addresses to appear in the DNS
+with names configured either in each host or in a central
+configuration file. Dnsmasq supports static and dynamic DHCP leases
+and BOOTP for network booting of diskless machines.
 
-Dnsmasq is targeted at home networks using NAT and connected to the internet
-via a modem, cable-modem or ADSL connection but would be a good choice for
-any small network where low resource use and ease of configuration are
-important. 
+Dnsmasq is targeted at home networks using NAT and connected to the
+Internet via a modem, cable-modem or ADSL connection but would be a
+good choice for any small network where low resource use and ease of
+configuration are important. 
 
 %description -l pl
-Dnsmasq jest lekkim, ³atwym w konfiguracji forwarderem DNS
-zaprojektowanym do serwowania us³ugi DNS dla ma³ych sieci, gdzie
-u¿ywanie BIND by³oby przesad±. Zewnêtrzne serwery DNS mog± byæ
-automatycznie konfigurowane przez PPP lub DHCP. Mo¿e on serwowaæ tak¿e
-nazwy dla lokalnych maszyn nie znajduj±cych siê w globalnym DNS. Jest
-idealny dla sieci za NAT i po³±czonych przez modem, ISDL, ADSL lub
-po³±czenia kablowe.
+dnsmasq jest lekkim, ³atwym w konfiguracji forwarderem DNS i serwerem
+DHCP zaprojektowanym do serwowania us³ugi DNS i opcjonalnie DHCP dla
+ma³ych sieci. Mo¿e on serwowaæ tak¿e nazwy dla lokalnych maszyn nie
+znajduj±cych siê w globalnym DNS-ie. Serwer DHCP integruje siê z
+serwerem DNS, umo¿liwiaj±c maszynom o adresach przydzielonych przez
+DHCP pojawienie siê w DNS-ie z nazwami konfigurowanymi dla ka¿dego
+hosta lub w centralnym pliku konfiguracyjnym. dnsmasq obs³uguje
+statyczne i dynamiczne dzier¿awy DHCP oraz BOOTP do uruchamiania z
+sieci maszyn bezdyskowych.
+
+dnsmasq jest przeznaczony g³ównie dla sieci domowych u¿ywaj±cych NAT-u
+i pod³±czonych do Internetu przez modem, modem kablowy lub ³±cze ADSL,
+ale jest dobrym wyborem dla dowolnej ma³ej sieci, gdzie wa¿ne jest
+ma³e wykorzystanie zasobów i ³atwa konfiguracja.
 
 %prep
 %setup -q
