@@ -1,5 +1,5 @@
 Summary:	A lightweight caching server (DNS, DHCP)
-Summary(pl):	Lekki buforuj±cy serwer nazw (DNS, DHCP)
+Summary(pl):	Lekki buforuj±cy serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.35
 Release:	1
