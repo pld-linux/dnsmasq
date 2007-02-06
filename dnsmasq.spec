@@ -1,3 +1,6 @@
+# TODO:
+# - subpackage DNSmasq webmin module (contrib/webmin)
+#
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl):	Lekki buforuj±cy serwer nazw (DNS) i DHCP
 Name:		dnsmasq
@@ -65,6 +68,9 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
 install dnsmasq.conf.example $RPM_BUILD_ROOT%{_sysconfdir}/dnsmasq.conf
 
+install contrib/port-forward/dnsmasq-portforward $RPM_BUILD_ROOT%{_sbindir}
+install contrib/port-forward/portforward $RPM_BUILD_ROOT%{_sysconfdir}
+
 %{__make} install-i18n \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix}
@@ -86,10 +92,11 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq,port-forward}
+%doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq}
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
-%attr(755,root,root) %{_sbindir}/dnsmasq
+%attr(755,root,root) %{_sbindir}/dnsmasq*
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/dnsmasq
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dnsmasq.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/portforward
 %{_mandir}/man8/*
 %lang(es) %{_mandir}/es/man8/* 
