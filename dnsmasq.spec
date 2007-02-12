@@ -2,7 +2,7 @@
 # - subpackage DNSmasq webmin module (contrib/webmin)
 #
 Summary:	A lightweight caching server (DNS, DHCP)
-Summary(pl):	Lekki buforuj±cy serwer nazw (DNS) i DHCP
+Summary(pl.UTF-8):   Lekki buforujÄ…cy serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.37
 Release:	1
@@ -35,21 +35,21 @@ Internet via a modem, cable-modem or ADSL connection but would be a
 good choice for any small network where low resource use and ease of
 configuration are important. 
 
-%description -l pl
-dnsmasq jest lekkim, ³atwym w konfiguracji forwarderem DNS i serwerem
-DHCP zaprojektowanym do serwowania us³ugi DNS i opcjonalnie DHCP dla
-ma³ych sieci. Mo¿e on serwowaæ tak¿e nazwy dla lokalnych maszyn nie
-znajduj±cych siê w globalnym DNS-ie. Serwer DHCP integruje siê z
-serwerem DNS, umo¿liwiaj±c maszynom o adresach przydzielonych przez
-DHCP pojawienie siê w DNS-ie z nazwami konfigurowanymi dla ka¿dego
-hosta lub w centralnym pliku konfiguracyjnym. dnsmasq obs³uguje
-statyczne i dynamiczne dzier¿awy DHCP oraz BOOTP do uruchamiania z
+%description -l pl.UTF-8
+dnsmasq jest lekkim, Å‚atwym w konfiguracji forwarderem DNS i serwerem
+DHCP zaprojektowanym do serwowania usÅ‚ugi DNS i opcjonalnie DHCP dla
+maÅ‚ych sieci. MoÅ¼e on serwowaÄ‡ takÅ¼e nazwy dla lokalnych maszyn nie
+znajdujÄ…cych siÄ™ w globalnym DNS-ie. Serwer DHCP integruje siÄ™ z
+serwerem DNS, umoÅ¼liwiajÄ…c maszynom o adresach przydzielonych przez
+DHCP pojawienie siÄ™ w DNS-ie z nazwami konfigurowanymi dla kaÅ¼dego
+hosta lub w centralnym pliku konfiguracyjnym. dnsmasq obsÅ‚uguje
+statyczne i dynamiczne dzierÅ¼awy DHCP oraz BOOTP do uruchamiania z
 sieci maszyn bezdyskowych.
 
-dnsmasq jest przeznaczony g³ównie dla sieci domowych u¿ywaj±cych NAT-u
-i pod³±czonych do Internetu przez modem, modem kablowy lub ³±cze ADSL,
-ale jest dobrym wyborem dla dowolnej ma³ej sieci, gdzie wa¿ne jest
-ma³e wykorzystanie zasobów i ³atwa konfiguracja.
+dnsmasq jest przeznaczony gÅ‚Ã³wnie dla sieci domowych uÅ¼ywajÄ…cych NAT-u
+i podÅ‚Ä…czonych do Internetu przez modem, modem kablowy lub Å‚Ä…cze ADSL,
+ale jest dobrym wyborem dla dowolnej maÅ‚ej sieci, gdzie waÅ¼ne jest
+maÅ‚e wykorzystanie zasobÃ³w i Å‚atwa konfiguracja.
 
 %prep
 %setup -q
