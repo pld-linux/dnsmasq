@@ -2,7 +2,7 @@
 # - subpackage DNSmasq webmin module (contrib/webmin)
 #
 Summary:	A lightweight caching server (DNS, DHCP)
-Summary(pl.UTF-8):   Lekki buforujący serwer nazw (DNS) i DHCP
+Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.37
 Release:	1
