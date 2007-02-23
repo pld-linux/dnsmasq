@@ -75,6 +75,8 @@ install contrib/port-forward/portforward $RPM_BUILD_ROOT%{_sysconfdir}
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix}
 
+mv -f $RPM_BUILD_ROOT%{_datadir}/locale/{no,nb}
+
 %find_lang %{name}
 
 %clean
