@@ -57,7 +57,7 @@ małe wykorzystanie zasobów i łatwa konfiguracja.
 %build
 %{__make} all-i18n \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DHAVE_ISC_READER" \
+	CFLAGS="%{rpmcflags} -DHAVE_ISC_READER -D_GNU_SOURCE" \
 	PREFIX=%{_prefix}
 
 %install
@@ -102,3 +102,4 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/portforward
 %{_mandir}/man8/*
 %lang(es) %{_mandir}/es/man8/* 
+%lang(fr) %{_mandir}/fr/man8/* 
