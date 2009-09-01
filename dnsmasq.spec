@@ -1,15 +1,12 @@
-# TODO:
-# - subpackage DNSmasq webmin module (contrib/webmin)
-#
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
-Version:	2.49
+Version:	2.50
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	7ccc861d8a733474f9c0a0a127006ee9
+# Source0-md5:	f7b1e17c590e493039537434c57c9de7
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
