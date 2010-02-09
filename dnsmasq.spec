@@ -14,6 +14,8 @@ Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
 BuildRequires:	gettext-devel
+BuildRequires:	libidn-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -22,7 +24,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP
-server.  It is designed to provide DNS and, optionally, DHCP, to a
+server. It is designed to provide DNS and, optionally, DHCP, to a
 small network. It can serve the names of local machines which are not
 in the global DNS. The DHCP server integrates with the DNS server and
 allows machines with DHCP-allocated addresses to appear in the DNS
@@ -33,7 +35,7 @@ and BOOTP for network booting of diskless machines.
 Dnsmasq is targeted at home networks using NAT and connected to the
 Internet via a modem, cable-modem or ADSL connection but would be a
 good choice for any small network where low resource use and ease of
-configuration are important. 
+configuration are important.
 
 %description -l pl.UTF-8
 dnsmasq jest lekkim, łatwym w konfiguracji forwarderem DNS i serwerem
@@ -101,5 +103,5 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dnsmasq.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/portforward
 %{_mandir}/man8/*
-%lang(es) %{_mandir}/es/man8/* 
-%lang(fr) %{_mandir}/fr/man8/* 
+%lang(es) %{_mandir}/es/man8/*
+%lang(fr) %{_mandir}/fr/man8/*
