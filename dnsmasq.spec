@@ -4,12 +4,14 @@
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
-Version:	2.52
-Release:	1
+Version:	2.53
+%define	_rc	test19
+Release:	0.%{_rc}.1
 License:	GPL v2
 Group:		Networking/Daemons
-Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	1bb32fffdb4f977ead607802b5d701d0
+#Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}%{_rc}.tar.gz
+Source0:	http://thekelleys.org.uk/dnsmasq/test-releases/%{name}-%{version}%{_rc}.tar.gz
+# Source0-md5:	84b50571a7a2963fb2572643f9a41717
 Source1:	%{name}.init
 Source2:	%{name}.config
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
@@ -54,7 +56,7 @@ ale jest dobrym wyborem dla dowolnej małej sieci, gdzie ważne jest
 małe wykorzystanie zasobów i łatwa konfiguracja.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{_rc}
 
 %build
 %{__make} all-i18n \
