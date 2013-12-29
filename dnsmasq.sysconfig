@@ -1,0 +1,7 @@
+# configuration for dnsmasq
+
+# you can specify options for dnsmasq here
+
+# change '-l /var/lib/misc/dhcpd.leases' option if you want dnsmasq to cache any
+# "hostname" or "client-hostname" from a dhcpd's lease file
+OPTIONS="-l /var/lib/misc/dhcpd.leases"

@@ -5,20 +5,23 @@ Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.68
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 #Source0:	http://thekelleys.org.uk/dnsmasq/test-releases/%{name}-%{version}%{_rc}.tar.gz
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 # Source0-md5:	6f8351ca0901f248efdb81532778d2ef
 Source1:	%{name}.init
-Source2:	%{name}.config
+Source2:	%{name}.sysconfig
+Source3:	%{name}.service
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
 BuildRequires:	gettext-devel
 BuildRequires:	libidn-devel
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	rpmbuild(macros) >= 1.671
 Requires(post,preun):	/sbin/chkconfig
+Requires(post,preun,postun):	systemd-units >= 38
+Requires:	systemd-units >= 38
 Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -65,7 +68,8 @@ małe wykorzystanie zasobów i łatwa konfiguracja.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d,%{_mandir}/man8}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d} \
+	$RPM_BUILD_ROOT{%{systemdunitdir},%{_mandir}/man8}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
@@ -73,6 +77,8 @@ install dnsmasq.conf.example $RPM_BUILD_ROOT%{_sysconfdir}/dnsmasq.conf
 
 install contrib/port-forward/dnsmasq-portforward $RPM_BUILD_ROOT%{_sbindir}
 install contrib/port-forward/portforward $RPM_BUILD_ROOT%{_sysconfdir}
+
+install %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}/dnsmasq.service
 
 %{__make} install-i18n \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -88,17 +94,41 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add dnsmasq
 %service dnsmasq restart
+%systemd_post dnsmasq.service
 
 %preun
 if [ "$1" = "0" ]; then
 	%service dnsmasq stop
 	/sbin/chkconfig --del dnsmasq
 fi
+%systemd_preun dnsmasq.service
+
+%postun
+%systemd_reload
+
+%triggerpostun -- dnsmasq < 2.68-1.1
+if [ -f /etc/sysconfig/dnsmasq ]; then
+	__OPT=
+	. /etc/sysconfig/dnsmasq
+	[ -n "$MAILHOSTNAME" ] &&  __OPT="-m $MAILHOSTNAME"
+	[ -n "$RESOLV_CONF" ] && __OPT="$__OPT -r $RESOLV_CONF"
+	[ -n "$DHCP_LEASE" ] && __OPT="$__OPT -l $DHCP_LEASE"
+	[ -n "$DOMAIN_SUFFIX" ] && __OPT="$__OPT -s $DOMAIN_SUFFIX"
+	[ -n "$INTERFACE" ] && __OPT="$__OPT -i $INTERFACE"
+	if [ -n "$__OPT" ]; then
+		%{__cp} -f /etc/sysconfig/dnsmasq{,.rpmsave}
+		echo >>/etc/sysconfig/dnsmasq
+		echo "# Added by rpm trigger" >>/etc/sysconfig/dnsmasq
+		echo "OPTIONS=\"$OPTIONS $__OPT\"" >>/etc/sysconfig/dnsmasq
+	fi
+fi
+%systemd_trigger dnsmasq.service
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq}
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
+%{systemdunitdir}/dnsmasq.service
 %attr(755,root,root) %{_sbindir}/dnsmasq*
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/dnsmasq
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dnsmasq.conf
