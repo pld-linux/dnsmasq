@@ -15,7 +15,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.service
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libidn-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.671
