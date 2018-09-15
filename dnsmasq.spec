@@ -5,7 +5,7 @@ Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.79
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 #Source0:	http://thekelleys.org.uk/dnsmasq/test-releases/%{name}-%{version}%{_rc}.tar.gz
@@ -16,7 +16,9 @@ Source2:	%{name}.sysconfig
 Source3:	%{name}.service
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
 BuildRequires:	gettext-tools
+BuildRequires:	gmp-devel
 BuildRequires:	libidn-devel
+BuildRequires:	nettle-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.671
 Requires(post,preun):	/sbin/chkconfig
@@ -25,6 +27,8 @@ Requires:	systemd-units >= 38
 Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		copts	-DHAVE_DNSSEC
 
 %description
 Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP
@@ -64,12 +68,14 @@ małe wykorzystanie zasobów i łatwa konfiguracja.
 %{__make} all-i18n \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcppflags} %{rpmcflags} -DHAVE_ISC_READER -D_GNU_SOURCE" \
+	LDFLAGS="%{rpmldflags}" \
+	COPTS="%{copts}" \
 	PREFIX=%{_prefix}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d} \
-	$RPM_BUILD_ROOT{%{systemdunitdir},%{_mandir}/man8}
+	$RPM_BUILD_ROOT{%{systemdunitdir},%{_mandir}/man8,%{_datadir}/dnsmasq}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/dnsmasq
@@ -80,7 +86,10 @@ install contrib/port-forward/portforward $RPM_BUILD_ROOT%{_sysconfdir}
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}/dnsmasq.service
 
+install -p trust-anchors.conf $RPM_BUILD_ROOT%{_datadir}/dnsmasq
+
 %{__make} install-i18n \
+	COPTS="%{copts}" \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix}
 
@@ -136,3 +145,5 @@ fi
 %{_mandir}/man8/*
 %lang(es) %{_mandir}/es/man8/*
 %lang(fr) %{_mandir}/fr/man8/*
+%dir %{_datadir}/dnsmasq
+%{_datadir}/dnsmasq/trust-anchors.conf
