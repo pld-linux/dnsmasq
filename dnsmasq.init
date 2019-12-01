@@ -31,8 +31,8 @@ fi
 
 MAILHOSTNAME=""
 RESOLV_CONF=""
-DHCP_LEASE="/var/lib/dhcp/dhcpd.leases"
-DOMAIN_SUFFIX=`dnsdomainname`
+DHCP_LEASE=""
+DOMAIN_SUFFIX=`dnsdomainname 2>/dev/null`
 OPTIONS=""
 
 # Get service config
