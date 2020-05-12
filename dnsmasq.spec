@@ -1,23 +1,32 @@
 # TODO:
 # - subpackage DNSmasq webmin module (contrib/webmin)
+#
+# Conditional build:
+%bcond_with	dbus		# DBus interface
+%bcond_without	idn		# IDN via libidn2
+%bcond_without	conntrack	# conntrack support
+%bcond_with	lua		# Lua support
 
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.81
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
-#Source0:	http://thekelleys.org.uk/dnsmasq/test-releases/%{name}-%{version}%{_rc}.tar.gz
+# TODO:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.xz
 Source0:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
 # Source0-md5:	e43808177a773014b5892ccba238f7a8
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.service
 URL:		http://www.thekelleys.org.uk/dnsmasq/doc.html
+%{?with_dbus:BuildRequires:	dbus-devel}
 BuildRequires:	gettext-tools
 BuildRequires:	gmp-devel
-BuildRequires:	libidn-devel
+%{?with_idn:BuildRequires:	libidn2-devel}
+%{?with_conntrack:BuildRequires:	libnetfilter_conntrack-devel}
+%{?with_lua:BuildRequires:	lua52-devel}
 BuildRequires:	nettle-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.671
@@ -28,7 +37,7 @@ Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		copts	-DHAVE_DNSSEC
+%define		copts	-DHAVE_DNSSEC%{?with_dbus: -DHAVE_DBUS}%{?with_idn: -DHAVE_LIBIDN2}%{?with_conntrack: -DHAVE_CONNTRACK}%{?with_lua: -DHAVE_LUASCRIPT}
 
 %description
 Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP
@@ -62,12 +71,12 @@ ale jest dobrym wyborem dla dowolnej małej sieci, gdzie ważne jest
 małe wykorzystanie zasobów i łatwa konfiguracja.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 
 %build
 %{__make} all-i18n \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcppflags} %{rpmcflags} -DHAVE_ISC_READER -D_GNU_SOURCE" \
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -DHAVE_ISC_READER" \
 	LDFLAGS="%{rpmldflags}" \
 	COPTS="%{copts}" \
 	PREFIX=%{_prefix}
@@ -93,7 +102,7 @@ install -p trust-anchors.conf $RPM_BUILD_ROOT%{_datadir}/dnsmasq
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix}
 
-mv -f $RPM_BUILD_ROOT%{_datadir}/locale/{no,nb}
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/locale/{no,nb}
 
 %find_lang %{name}
 
@@ -138,12 +147,13 @@ fi
 %doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq}
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
 %{systemdunitdir}/dnsmasq.service
-%attr(755,root,root) %{_sbindir}/dnsmasq*
+%attr(755,root,root) %{_sbindir}/dnsmasq
+%attr(755,root,root) %{_sbindir}/dnsmasq-portforward
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/dnsmasq
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dnsmasq.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/portforward
-%{_mandir}/man8/*
-%lang(es) %{_mandir}/es/man8/*
-%lang(fr) %{_mandir}/fr/man8/*
+%{_mandir}/man8/dnsmasq.8*
+%lang(es) %{_mandir}/es/man8/dnsmasq.8*
+%lang(fr) %{_mandir}/fr/man8/dnsmasq.8*
 %dir %{_datadir}/dnsmasq
 %{_datadir}/dnsmasq/trust-anchors.conf
