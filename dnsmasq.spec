@@ -83,7 +83,7 @@ małe wykorzystanie zasobów i łatwa konfiguracja.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/sysconfig,/etc/rc.d/init.d} \
+install -d $RPM_BUILD_ROOT{%{_sbindir},/etc/dbus-1/system.d,/etc/sysconfig,/etc/rc.d/init.d} \
 	$RPM_BUILD_ROOT{%{systemdunitdir},%{_mandir}/man8,%{_datadir}/dnsmasq}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/dnsmasq
@@ -103,6 +103,10 @@ install -p trust-anchors.conf $RPM_BUILD_ROOT%{_datadir}/dnsmasq
 	PREFIX=%{_prefix}
 
 %{__mv} $RPM_BUILD_ROOT%{_datadir}/locale/{no,nb}
+
+%if %{with dbus}
+cp -p dbus/dnsmasq.conf $RPM_BUILD_ROOT/etc/dbus-1/system.d/dnsmasq.conf
+%endif
 
 %find_lang %{name}
 
@@ -145,6 +149,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc CHANGELOG FAQ *.html contrib/{dnslist,dynamic-dnsmasq}
+%{?with_dbus:%config(noreplace) %verify(not md5 mtime size) /etc/dbus-1/system.d/dnsmasq.conf}
 %attr(754,root,root) /etc/rc.d/init.d/dnsmasq
 %{systemdunitdir}/dnsmasq.service
 %attr(755,root,root) %{_sbindir}/dnsmasq
