@@ -2,7 +2,7 @@
 # - subpackage DNSmasq webmin module (contrib/webmin)
 #
 # Conditional build:
-%bcond_with	dbus		# DBus interface
+%bcond_without	dbus		# DBus interface
 %bcond_without	idn		# IDN via libidn2
 %bcond_without	conntrack	# conntrack support
 %bcond_with	lua		# Lua support
