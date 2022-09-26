@@ -5,18 +5,19 @@
 %bcond_without	dbus		# DBus interface
 %bcond_without	idn		# IDN via libidn2
 %bcond_without	conntrack	# conntrack support
+%bcond_without	nftables	# nftables support
 %bcond_with	lua		# Lua support
 
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
-Version:	2.86
+Version:	2.87
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 # TODO:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.xz
 Source0:	https://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	33c8fbe71961145f311bbd5d7765b7d9
+# Source0-md5:	97d8807f678896283d7af246b28d234b
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.service
@@ -28,6 +29,7 @@ BuildRequires:	gmp-devel
 %{?with_conntrack:BuildRequires:	libnetfilter_conntrack-devel}
 %{?with_lua:BuildRequires:	lua52-devel}
 BuildRequires:	nettle-devel
+%{?with_nftables:BuildRequires:	nftables-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.671
 Requires(post,preun):	/sbin/chkconfig
@@ -37,7 +39,7 @@ Requires:	rc-scripts
 Provides:	caching-nameserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		copts	-DHAVE_DNSSEC%{?with_dbus: -DHAVE_DBUS}%{?with_idn: -DHAVE_LIBIDN2}%{?with_conntrack: -DHAVE_CONNTRACK}%{?with_lua: -DHAVE_LUASCRIPT}
+%define		copts	-DHAVE_DNSSEC%{?with_dbus: -DHAVE_DBUS}%{?with_idn: -DHAVE_LIBIDN2}%{?with_conntrack: -DHAVE_CONNTRACK}%{?with_lua: -DHAVE_LUASCRIPT}%{?with_nftables: -DHAVE_NFTSET}
 
 %description
 Dnsmasq is a lightweight, easy to configure DNS forwarder and DHCP
