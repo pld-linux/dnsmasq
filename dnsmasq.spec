@@ -11,13 +11,13 @@
 Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
-Version:	2.87
+Version:	2.88
 Release:	1
 License:	GPL v2
 Group:		Networking/Daemons
 # TODO:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.xz
 Source0:	https://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.gz
-# Source0-md5:	97d8807f678896283d7af246b28d234b
+# Source0-md5:	9c5eb2f151d89a3a3ae7d0eac76f707a
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}.service
