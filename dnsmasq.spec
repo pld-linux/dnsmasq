@@ -12,7 +12,7 @@ Summary:	A lightweight caching server (DNS, DHCP)
 Summary(pl.UTF-8):	Lekki buforujący serwer nazw (DNS) i DHCP
 Name:		dnsmasq
 Version:	2.91
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 # TODO:	http://thekelleys.org.uk/dnsmasq/%{name}-%{version}.tar.xz
@@ -100,6 +100,9 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}/dnsmasq.service
 install -p trust-anchors.conf $RPM_BUILD_ROOT%{_datadir}/dnsmasq
 
 %{__make} install-i18n \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -DHAVE_ISC_READER" \
+	LDFLAGS="%{rpmldflags}" \
 	COPTS="%{copts}" \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix}
